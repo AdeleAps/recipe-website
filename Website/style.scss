@@ -109,6 +109,19 @@ main {
       }
     }
   }
+
+  .form-container {
+    max-width: 50%;
+    margin-block: 4em;
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      button {
+        width: 10em;
+      }
+    }
+  }
 }
 
 footer {

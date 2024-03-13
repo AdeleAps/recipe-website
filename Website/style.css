@@ -87,6 +87,17 @@ main .content-section .recipe-grid .card img {
   -o-object-fit: cover;
      object-fit: cover;
 }
+main .form-container {
+  max-width: 50%;
+  margin-block: 4em;
+}
+main .form-container .button-container {
+  display: flex;
+  justify-content: center;
+}
+main .form-container .button-container button {
+  width: 10em;
+}
 
 footer {
   position: relative;

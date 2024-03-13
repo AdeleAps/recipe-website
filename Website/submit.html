@@ -30,11 +30,94 @@
               <a class="nav-link" href="./myrecipes.html">My Recipes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="./submit.html">Submit a Recipe</a>
+              <a class="nav-link active" href="./submit.html"
+                >Submit a Recipe</a
+              >
             </li>
           </ul>
         </nav>
       </header>
+      <main>
+        <div class="form-container container">
+          <h2 class="mb-4">Submit Your Recipe</h2>
+          <form>
+            <div class="form-group">
+              <label for="recipeName">Recipe Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="recipeName"
+                placeholder="Enter recipe name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="ingredients">Ingredients</label>
+              <textarea
+                class="form-control"
+                id="ingredients"
+                rows="4"
+                placeholder="Enter ingredients"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="instructions">Instructions</label>
+              <textarea
+                class="form-control"
+                id="instructions"
+                rows="6"
+                placeholder="Enter instructions"
+                required
+              ></textarea>
+              <div class="form-row mt-3">
+                <div class="form-group col-md-6">
+                  <label for="inputPhone">Phone</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="inputPhone"
+                    placeholder="Enter phone number"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEmail">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="inputEmail"
+                    placeholder="Enter email"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row ml-3">
+                <div class="form-group form-check col-md-6">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="vegetarianCheck"
+                  />
+                  <label class="form-check-label" for="vegetarianCheck"
+                    >Vegetarian</label
+                  >
+                </div>
+                <div class="form-group form-check col-md-6">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="veganCheck"
+                  />
+                  <label class="form-check-label" for="veganCheck">Vegan</label>
+                </div>
+              </div>
+            </div>
+            <div class="button-container">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </main>
       <footer>
         <div class="footer">
           <ul class="social-links">
