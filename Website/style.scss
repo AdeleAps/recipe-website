@@ -1,3 +1,59 @@
-h2 {
-    color: "red"
+// variables
+
+//colors
+$clr-background: #e6e0d2;
+
+// fonts
+$ft-heading: "Verdana, sans-serif";
+
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-color: $clr-background;
+  font-size: 18px;
+  color: black;
+  overflow-x: hidden;
+}
+
+#mainContainer {
+  margin-inline: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  nav.navbar {
+    .navbar-nav {
+      margin-left: 3em;
+      display: flex;
+      gap: 3em;
+
+      .nav-link {
+        color: black;
+      }
+    }
+  }
+}
+
+main {
+  position: relative;
+  .hero {
+    background-image: url(./Assets/Images/lily-banse--YHSwy6uqvk-unsplash.jpg);
+    height: 350px;
+    width: 120vw;
+    margin-left: -15vw;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      color: white;
+      font-size: 3em;
+      font-family: $ft-heading;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+  }
 }
