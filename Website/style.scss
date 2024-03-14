@@ -8,6 +8,13 @@ $clr-hover: #ff9800;
 // fonts
 $ft-heading: "Verdana, sans-serif";
 
+// breakpoints
+
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-desktop: 1025px;
+
+html,
 body {
   box-sizing: border-box;
   padding: 0;
@@ -16,6 +23,7 @@ body {
   font-size: 18px;
   color: black;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 #mainContainer {
@@ -23,6 +31,9 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  @media screen and (max-width: $bp-tablet) {
+    margin-inline: 2em;
+  }
 }
 
 header {
@@ -37,11 +48,33 @@ header {
         transition: color 0.3s;
 
         &.active {
-          font-weight: bold;
+          text-decoration: underline;
         }
 
         &:hover {
           color: $clr-hover;
+        }
+      }
+    }
+
+    @media screen and (max-width: $bp-tablet) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .navbar-brand {
+        margin-right: 0 !important;
+      }
+
+      .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;
+        gap: 1em;
+        width: 100%;
+        & > * {
+          text-align: center;
         }
       }
     }
@@ -69,10 +102,18 @@ main {
       letter-spacing: 1px;
       font-weight: 500;
     }
+
+    @media screen and (max-width: $bp-desktop) {
+      h1 {
+        text-align: center;
+        max-width: 80%;
+      }
+    }
   }
 
   .content-section {
     margin-block: 4em;
+    min-height: 18em;
     h3 {
       position: relative;
       font-size: 1.3em;
@@ -102,19 +143,34 @@ main {
         border: none;
         width: 15em;
 
+        .card-body {
+          padding: 1em;
+          padding-top: 0.5em;
+        }
+
         img {
           height: 10em;
           object-fit: cover;
+        }
+      }
+
+      @media screen and (max-width: $bp-tablet) {
+        .card {
+          width: 100%;
         }
       }
     }
   }
 
   .form-container {
-    max-width: 50%;
+    max-width: 60%;
     margin-block: 4em;
 
-    .button-container {
+    @media screen and (max-width: $bp-tablet) {
+      max-width: 90%;
+    }
+
+    div.button-container {
       display: flex;
       justify-content: center;
       button {
@@ -137,6 +193,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: $bp-tablet) {
+      margin-left: -20vw;
+    }
 
     .social-links {
       list-style: none;
