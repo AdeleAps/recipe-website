@@ -40,7 +40,7 @@
       <main>
         <div class="form-container container">
           <h2 class="mb-4">Submit Your Recipe</h2>
-          <form>
+          <form class="needs-validation" novalidate>
             <div class="form-group">
               <label for="recipeName">Recipe Name</label>
               <input
@@ -78,6 +78,7 @@
                     class="form-control"
                     id="inputPhone"
                     placeholder="Enter phone number"
+                    required
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -87,12 +88,13 @@
                     class="form-control"
                     id="inputEmail"
                     placeholder="Enter email"
+                    required
                   />
                 </div>
               </div>
 
               <div class="form-row ml-3">
-                <div class="form-group form-check col-md-6">
+                <div class="form-check form-check-inline">
                   <input
                     type="checkbox"
                     class="form-check-input"
@@ -102,7 +104,7 @@
                     >Vegetarian</label
                   >
                 </div>
-                <div class="form-group form-check col-md-6">
+                <div class="form-check-inline form-check">
                   <input
                     type="checkbox"
                     class="form-check-input"
@@ -131,6 +133,32 @@
           </ul>
         </div>
       </footer>
+
+      // modal
+
+      <div
+        class="modal fade"
+        id="feedbackModal"
+        tabindex="-1"
+        aria-labelledby="feedbackModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="feedbackModalLabel">Modal title</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

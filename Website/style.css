@@ -21,6 +21,15 @@ body {
     margin-inline: 2em;
   }
 }
+#mainContainer .modal-dialog {
+  width: 20em;
+}
+#mainContainer .modal-dialog .modal-title.success {
+  color: green;
+}
+#mainContainer .modal-dialog .modal-title.failure {
+  color: rgb(214, 26, 26);
+}
 
 header nav.navbar .navbar-nav {
   margin-left: 3em;
@@ -141,7 +150,7 @@ main .content-section .recipe-grid .card .image-container .heart-icon {
   height: 2em;
   background-size: contain;
   background-repeat: no-repeat;
-  transition: transform 0.7s, opacity 0.5s;
+  transition: transform 0.3s, opacity 0.5s;
 }
 main .content-section .recipe-grid .card .image-container .heart-icon:hover {
   transform: scale(1.2);

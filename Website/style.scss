@@ -4,6 +4,7 @@
 $clr-background: #e6e0d2;
 $clr-background-dark: #463f2f;
 $clr-hover: #ff9800;
+$clr-error: rgb(214, 26, 26);
 
 // fonts
 $ft-heading: "Verdana, sans-serif";
@@ -33,6 +34,16 @@ body {
   position: relative;
   @media screen and (max-width: $bp-tablet) {
     margin-inline: 2em;
+  }
+
+  .modal-dialog {
+    width: 20em;
+    .modal-title.success {
+      color: green;
+    }
+    .modal-title.failure {
+      color: $clr-error;
+    }
   }
 }
 
@@ -166,7 +177,7 @@ main {
             height: 2em;
             background-size: contain;
             background-repeat: no-repeat;
-            transition: transform 0.7s, opacity 0.5s;
+            transition: transform 0.3s, opacity 0.5s;
 
             &:hover {
               transform: scale(1.2);
