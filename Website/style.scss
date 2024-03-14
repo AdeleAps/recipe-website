@@ -142,15 +142,37 @@ main {
         background-color: inherit;
         border: none;
         width: 15em;
+        cursor: pointer;
 
         .card-body {
           padding: 1em;
           padding-top: 0.5em;
         }
 
-        img {
-          height: 10em;
-          object-fit: cover;
+        .image-container {
+          position: relative;
+          img:not(.heart-icon) {
+            height: 10em;
+            object-fit: cover;
+            position: relative;
+          }
+
+          .heart-icon {
+            position: absolute;
+            top: 0.5em;
+            right: 0.5em;
+            opacity: 0.5;
+            width: 2em;
+            height: 2em;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: transform 0.7s, opacity 0.5s;
+
+            &:hover {
+              transform: scale(1.2);
+              opacity: 1;
+            }
+          }
         }
       }
 
