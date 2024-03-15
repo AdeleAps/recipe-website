@@ -211,6 +211,18 @@ main {
         }
       }
     }
+
+    .no-recipes {
+      min-height: 20em;
+      & > div {
+        padding-block: 2em;
+      }
+
+      .collapse > .card-body,
+      .collapsing > .card-body {
+        width: 100%;
+      }
+    }
   }
 
   .form-container {
@@ -229,6 +241,13 @@ main {
       }
     }
   }
+}
+
+button#backToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: none;
 }
 
 footer {

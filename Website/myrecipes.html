@@ -38,8 +38,26 @@
       <main>
         <section class="content-section">
           <h3>My Recipes</h3>
-          <div class="recipe-grid">
-            <div>No recipes have yet been added!</div>
+          <div class="no-recipes">
+            <div>No recipes have been added yet!</div>
+            <p>
+              <button
+                class="btn btn-info"
+                type="button"
+                data-toggle="collapse"
+                data-target="#infoCollapse"
+                aria-expanded="false"
+                aria-controls="infoCollapse"
+              >
+                How To Add a Recipe
+              </button>
+            </p>
+            <div class="collapse" id="infoCollapse">
+              <div class="card card-body">
+                It's very easy! Just find a recipe you like and click on the
+                heart icon.
+              </div>
+            </div>
           </div>
         </section>
       </main>
