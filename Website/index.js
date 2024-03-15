@@ -1,6 +1,12 @@
 window.addEventListener("load", function () {
-  let forms = document.getElementsByClassName("needs-validation");
-  Array.prototype.filter.call(forms, function (form) {
+  handleFormSubmission();
+  togglePlaceholderFade();
+});
+
+function handleFormSubmission() {
+  const form = document.querySelector(".needs-validation");
+
+  if (form) {
     form.addEventListener(
       "submit",
       function (event) {
@@ -24,8 +30,8 @@ window.addEventListener("load", function () {
       },
       false
     );
-  });
-});
+  }
+}
 
 function openRecipe(element) {
   $("#recipeLightbox .modal-body").empty();
@@ -53,4 +59,17 @@ function openRecipe(element) {
 
   $("#recipeLightboxTitle").text(recipeTitle);
   $("#recipeLightbox").modal("show");
+}
+
+function togglePlaceholderFade() {
+  $(
+    '#recipe-submit-form input[type="text"], #recipe-submit-form input[type="email"], #recipe-submit-form input[type="tel"], #recipe-submit-form textarea'
+  ).hover(
+    function () {
+      $(this).addClass("input-placeholder-fade");
+    },
+    function () {
+      $(this).removeClass("input-placeholder-fade");
+    }
+  );
 }

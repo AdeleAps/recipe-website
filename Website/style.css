@@ -21,8 +21,13 @@ body {
     margin-inline: 2em;
   }
 }
-#mainContainer .modal-dialog.modal-submission {
-  width: 20em;
+@media screen and (min-width: 768px) {
+  #mainContainer .modal-dialog.modal-submission {
+    width: 20em;
+  }
+}
+#mainContainer .modal-dialog.modal-submission .modal-header {
+  border: none;
 }
 #mainContainer .modal-dialog.modal-submission .modal-title.success {
   color: green;
@@ -113,6 +118,15 @@ main .content-section {
   margin-block: 4em;
   min-height: 18em;
 }
+main .content-section .top-selection {
+  display: flex;
+  justify-content: space-between;
+}
+@media only screen and (min-width: 1025px) {
+  main .content-section .top-selection button {
+    margin-right: 2em;
+  }
+}
 main .content-section h3 {
   position: relative;
   font-size: 1.3em;
@@ -147,6 +161,16 @@ main .content-section .recipe-grid .card .card-body {
 }
 main .content-section .recipe-grid .card .image-container {
   position: relative;
+}
+main .content-section .recipe-grid .card .image-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10em;
+  pointer-events: none;
+  background-image: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.2) 90%);
 }
 main .content-section .recipe-grid .card .image-container img:not(.heart-icon) {
   height: 10em;
@@ -192,6 +216,15 @@ main .form-container {
   main .form-container {
     max-width: 90%;
   }
+}
+main .form-container .input-placeholder-fade::-moz-placeholder {
+  -moz-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+main .form-container .input-placeholder-fade::placeholder {
+  transition: opacity 0.3s ease;
+  opacity: 0;
 }
 main .form-container div.button-container {
   display: flex;
