@@ -1,6 +1,7 @@
 let api;
 
 window.addEventListener("load", function () {
+  const path = window.location.pathname;
   api = axios.create({
     baseURL: "https://www.themealdb.com/api/json/v1/1/",
   });
@@ -9,6 +10,12 @@ window.addEventListener("load", function () {
   togglePlaceholderFade();
   getAllMealCategories();
   getAllRecipes();
+
+  if (path.endsWith("/myrecipes.html")) {
+    getFavoriteRecipes();
+  } else {
+    getAllRecipes();
+  }
 });
 
 function handleFormSubmission() {
@@ -128,7 +135,8 @@ const getAllRecipes = async (category = "American") => {
     const dropdownMenuItems = document.querySelectorAll(
       ".dropdown-menu .dropdown-item"
     );
-    const favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
+    const favoriteRecipes =
+      JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
 
     dropdownMenuItems.forEach((item) => {
       item.style.fontWeight = "normal";
@@ -146,7 +154,9 @@ const getAllRecipes = async (category = "American") => {
     if (meals.length > 0) {
       meals.forEach((recipe) => {
         const isFavoriteRecipe = favoriteRecipes.includes(recipe.idMeal);
-        const heartSVG = isFavoriteRecipe ? "./Assets/heart-filled.svg" : "./Assets/heart.svg";
+        const heartSVG = isFavoriteRecipe
+          ? "./Assets/heart-filled.svg"
+          : "./Assets/heart.svg";
 
         const cardHtml = `
           <div class="card card-homepage" onClick="openRecipe(this)">
@@ -189,7 +199,14 @@ const showLoadingSpinner = () => {
     <span class="sr-only">Loading...</span>
   </div>
   </div>`;
-  $(".recipe-grid").html(spinnerHtml);
+
+  const recipeGrid = $(".recipe-grid");
+
+  if (recipeGrid) {
+    $(".recipe-grid").html(spinnerHtml);
+  } else {
+    $("#favorites").html(spinnerHtml);
+  }
 };
 
 function extractIngredients(recipe) {
@@ -218,6 +235,85 @@ const toggleFavoriteRecipe = (event, recipeId) => {
     localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
     heartIcon.src = "./Assets/heart.svg";
   }
+};
 
-  console.log(favoriteRecipes);
+const getFavoriteRecipes = async () => {
+  try {
+    const contentSection = $("#favorites");
+    showLoadingSpinner();
+    const favoriteRecipes =
+      JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
+    const recipes = [];
+    const recipeGridHTML = `<div class="recipe-grid"></div>`;
+
+    if (favoriteRecipes.length > 0) {
+      for (const recipeId of favoriteRecipes) {
+        const response = await api.get(`lookup.php?i=${recipeId}`);
+        const recipe = response.data.meals[0];
+        recipes.push(recipe);
+      }
+
+      contentSection.empty();
+      contentSection.css("margin-block", "unset");
+      contentSection.append(recipeGridHTML);
+      const recipeGrid = $(".recipe-grid");
+
+      recipes.forEach((recipe) => {
+        const isFavoriteRecipe = favoriteRecipes.includes(recipe.idMeal);
+        const heartSVG = isFavoriteRecipe
+          ? "./Assets/heart-filled.svg"
+          : "./Assets/heart.svg";
+
+        const cardHtml = `
+          <div class="card " onClick="openRecipe(this)">
+            <div class="image-container">
+              <img
+                class="card-img-top"
+                src="${recipe.strMealThumb}"
+                alt="${recipe.strMeal}"
+              />
+              <img
+                src=${heartSVG}
+                alt="Favorite"
+                class="heart-icon"
+                onClick="toggleFavoriteRecipe(event, '${recipe.idMeal}')"
+                />
+              <div class="card-body">
+                <p class="card-text">${recipe.strMeal}</p>
+              </div>
+            </div>
+          </div>`;
+
+        recipeGrid.append(cardHtml);
+      });
+    } else {
+      const recipeGridHelpHTML = `<h3>My Recipes</h3>
+      <div class="no-recipes">
+        <div>No recipes have been added yet!</div>
+        <p>
+          <button
+            class="btn btn-info"
+            type="button"
+            data-toggle="collapse"
+            data-target="#infoCollapse"
+            aria-expanded="false"
+            aria-controls="infoCollapse"
+          >
+            How To Add a Recipe
+          </button>
+        </p>
+        <div class="collapse" id="infoCollapse">
+          <div class="card card-body">
+            It's very easy! Just find a recipe you like and click on the
+            heart icon.
+          </div>
+        </div>
+      </div>`;
+
+      contentSection.append(recipeGridHelpHTML);
+    }
+  } catch (error) {
+    console.error(error);
+    $(".content-section").html(`<p>Error loading recipes.</p>`);
+  }
 };
