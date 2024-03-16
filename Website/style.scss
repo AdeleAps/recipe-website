@@ -155,9 +155,13 @@ main {
       display: flex;
       justify-content: space-between;
 
-      @media only screen and (min-width: $bp-desktop) {
-        button {
-          margin-right: 2em;
+      .dropdown-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+
+        .clickable {
+          cursor: pointer;
         }
       }
     }
@@ -183,7 +187,13 @@ main {
       padding-block: 2em;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2em;
+      gap: 1.5em;
+      min-height: 500px;
+      justify-content: space-between;
+
+      @media screen and (min-width: $bp-tablet) {
+        grid-template-columns: repeat(auto-fit, 250px);
+      }
 
       .card {
         background-color: inherit;
@@ -240,6 +250,34 @@ main {
       @media screen and (max-width: $bp-tablet) {
         .card {
           width: 100%;
+        }
+      }
+
+      .loading-spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #loading-spinner {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: #fff;
+          animation: spin 1s ease-in-out infinite;
+          -webkit-animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+          }
+        }
+        @-webkit-keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+          }
         }
       }
     }
