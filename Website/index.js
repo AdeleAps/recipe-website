@@ -52,8 +52,6 @@ async function openRecipe(element) {
     const meal = response.data.meals[0];
     const ingredients = extractIngredients(meal);
 
-    console.log(meal);
-
     $("<img>", {
       src: image,
       class: "card-recipe-image",
@@ -130,6 +128,7 @@ const getAllRecipes = async (category = "American") => {
     const dropdownMenuItems = document.querySelectorAll(
       ".dropdown-menu .dropdown-item"
     );
+    const favoriteRecipes = JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
 
     dropdownMenuItems.forEach((item) => {
       item.style.fontWeight = "normal";
@@ -146,6 +145,9 @@ const getAllRecipes = async (category = "American") => {
 
     if (meals.length > 0) {
       meals.forEach((recipe) => {
+        const isFavoriteRecipe = favoriteRecipes.includes(recipe.idMeal);
+        const heartSVG = isFavoriteRecipe ? "./Assets/heart-filled.svg" : "./Assets/heart.svg";
+
         const cardHtml = `
           <div class="card card-homepage" onClick="openRecipe(this)">
             <div class="image-container">
@@ -155,10 +157,11 @@ const getAllRecipes = async (category = "American") => {
                 alt="${recipe.strMeal}"
               />
               <img
-                src="./Assets/heart.svg"
+                src=${heartSVG}
                 alt="Favorite"
                 class="heart-icon"
-              />
+                onClick="toggleFavoriteRecipe(event, '${recipe.idMeal}')"
+                />
               <div class="card-body">
                 <p class="card-text">${recipe.strMeal}</p>
               </div>
@@ -199,3 +202,22 @@ function extractIngredients(recipe) {
   }
   return ingredients;
 }
+
+const toggleFavoriteRecipe = (event, recipeId) => {
+  event.stopPropagation();
+  let favoriteRecipes =
+    JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
+  const heartIcon = event.target;
+
+  if (!favoriteRecipes.includes(recipeId)) {
+    favoriteRecipes.push(recipeId);
+    localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
+    heartIcon.src = "./Assets/heart-filled.svg";
+  } else {
+    favoriteRecipes = favoriteRecipes.filter((id) => id !== recipeId);
+    localStorage.setItem("favoriteRecipes", JSON.stringify(favoriteRecipes));
+    heartIcon.src = "./Assets/heart.svg";
+  }
+
+  console.log(favoriteRecipes);
+};
