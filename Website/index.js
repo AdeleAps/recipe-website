@@ -41,32 +41,42 @@ function handleFormSubmission() {
   }
 }
 
-function openRecipe(element) {
+async function openRecipe(element) {
   $("#recipeLightbox .modal-body").empty();
 
-  const card = $(element);
-  const recipeTitle = card.find(".card-body .card-text").text();
-  const image = card.find(".image-container .card-img-top").attr("src");
+  try {
+    const card = $(element);
+    const recipeTitle = card.find(".card-body .card-text").text();
+    const image = card.find(".image-container .card-img-top").attr("src");
+    const response = await api.get(`search.php?s=${recipeTitle}`);
+    const meal = response.data.meals[0];
+    const ingredients = extractIngredients(meal);
 
-  $("<img>", {
-    src: image,
-    class: "card-recipe-image",
-    alt: "Recipe Image",
-  }).appendTo("#recipeLightbox .modal-body");
+    console.log(meal);
 
-  $("<ul>", { class: "list-of-ingredients" })
-    .append("<li>Ingredient 1</li>")
-    .append("<li>Ingredient 2</li>")
-    .append("<li>Ingredient 3</li>")
-    .appendTo("#recipeLightbox .modal-body");
+    $("<img>", {
+      src: image,
+      class: "card-recipe-image",
+      alt: "Recipe Image",
+    }).appendTo("#recipeLightbox .modal-body");
 
-  $("<p>", {
-    class: "recipe-description",
-    text: "This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish. This is a dummy recipe description. Follow the steps to make your delicious dish.",
-  }).appendTo("#recipeLightbox .modal-body");
+    const $ul = $("<ul>", { class: "list-of-ingredients" });
+    ingredients.forEach((ingredient) => {
+      $ul.append($("<li>").text(ingredient));
+    });
 
-  $("#recipeLightboxTitle").text(recipeTitle);
-  $("#recipeLightbox").modal("show");
+    $ul.appendTo("#recipeLightbox .modal-body");
+
+    $("<p>", {
+      class: "recipe-description",
+      text: meal.strInstructions,
+    }).appendTo("#recipeLightbox .modal-body");
+
+    $("#recipeLightboxTitle").text(recipeTitle);
+    $("#recipeLightbox").modal("show");
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function togglePlaceholderFade() {
@@ -112,11 +122,25 @@ const getAllMealCategories = async () => {
 
 const getAllRecipes = async (category = "American") => {
   try {
-    showLoadingSpinner(); 
-    
+    showLoadingSpinner();
+
     const response = await api.get(`filter.php?a=${category}`);
-    const meals = response.data.meals.slice(0, 8);
+    const meals = response.data.meals.slice(0, 10);
     const recipeGrid = $(".recipe-grid");
+    const dropdownMenuItems = document.querySelectorAll(
+      ".dropdown-menu .dropdown-item"
+    );
+
+    dropdownMenuItems.forEach((item) => {
+      item.style.fontWeight = "normal";
+    });
+
+    const selectedCategoryItem = Array.from(dropdownMenuItems).find(
+      (item) => item.textContent === category
+    );
+    if (selectedCategoryItem) {
+      selectedCategoryItem.style.fontWeight = "bold";
+    }
 
     recipeGrid.empty();
 
@@ -140,7 +164,7 @@ const getAllRecipes = async (category = "American") => {
               </div>
             </div>
           </div>`;
-        recipeGrid.append(cardHtml); 
+        recipeGrid.append(cardHtml);
       });
     } else {
       recipeGrid.append(`<p>No recipes found for ${category}.</p>`);
@@ -164,3 +188,14 @@ const showLoadingSpinner = () => {
   </div>`;
   $(".recipe-grid").html(spinnerHtml);
 };
+
+function extractIngredients(recipe) {
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredientKey = `strIngredient${i}`;
+    if (recipe[ingredientKey] && recipe[ingredientKey].trim() !== "") {
+      ingredients.push(recipe[ingredientKey].trim());
+    }
+  }
+  return ingredients;
+}
